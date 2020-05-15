@@ -10,8 +10,9 @@ const Produto = require('./models/Produto');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
-app.get('/', (request, response) => {
-    response.status(200).send('Olá Mundo')
+app.get('/produtos', async (request, response) => {
+    const produtos = await Produto.findAll();
+    response.json(produtos);
 });
 
 app.post('/produtos', async (request, response) => {
