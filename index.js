@@ -10,6 +10,21 @@ const Produto = require('./models/Produto');
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
+
+app.get('/produtos/:id', async (request, response) =>{
+    
+    const id = request.params.id;
+
+    const query = {
+        where:{
+            id:id,
+        }
+    };
+
+    const produto = await Produto.findOne(query);
+    response.json(produto);
+});
+
 app.get('/produtos', async (request, response) =>{
     const produtos = await Produto.findAll();
     response.json(produtos);
