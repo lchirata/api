@@ -39,5 +39,20 @@ app.post('/produtos', async (request, response) => {
     response.json(produto);
 })
 
+app.delete('/produtos/:id', async (request, response) => {
+
+    const id = request.params.id;
+
+    const query = {
+        where: {
+            id: id,
+        }
+    };
+
+    const produto = await Produto.findOne(query);
+    const deletado = await produto.destroy();
+
+    response.json(deletado);
+});
 
 app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`))
