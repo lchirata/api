@@ -15,6 +15,20 @@ app.get('/produtos', async (request, response) => {
     response.json(produtos);
 });
 
+app.get('/produtos/:id', async (request, response)=> {
+
+    const id = request.params.id;
+
+    const query = { 
+        where: { 
+            id: id, 
+        } 
+    };
+
+    const produto = await Produto.findOne(query);
+    response.json(produto);
+});
+
 app.post('/produtos', async (request, response) => {
     const produto =  await Produto.create({
         nome: request.body.nome,
