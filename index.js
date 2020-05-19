@@ -2,6 +2,9 @@ const express = require ('express');
 const app = express();
 const PORT = 3000;
 const bodyParser = require('body-parser');
+const cors = require('cors');
+
+app.use(cors());
 
 require('./database/index');
 
@@ -12,7 +15,7 @@ app.use(bodyParser.json())
 
 
 app.get('/produtos/:id', async (request, response) =>{
-    
+        
     const id = request.params.id;
 
     const query = {
