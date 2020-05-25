@@ -2,7 +2,10 @@ const express = require('express');
 const bodyParser = require('body-parser')
 const app = express();
 const PORT = 3000;
+const cors = require('cors');
 
+app.use(cors());
+ 
 require('./database/index');
 
 const Produto = require('./models/Produto');
@@ -37,6 +40,33 @@ app.post('/produtos', async (request, response) => {
     });
 
     response.json(produto);
+})
+
+app.put('/produtos/:id', async (request, response) => {
+
+    const id = request.params.id;
+
+    const query = {
+        where: {
+            id: id,
+        }
+    };
+
+    const produto = await Produto.findOne(query);
+
+    const atualizaoRecebida = {
+        nome: request.body.nome,
+        descricao: request.body.descricao,
+        preco: request.body.preco,
+    }
+
+    produto.nome = request.body.nome,
+    produto.descricao = request.body.descricao,
+    produto.preco = request.body.preco,
+
+    await produto.save();
+    return produto
+
 })
 
 app.delete('/produtos/:id', async (request, response) => {
