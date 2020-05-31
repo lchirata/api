@@ -52,3 +52,25 @@ Roda arquivo de migration
 ```bash
 npx sequelize db:migrate
 ```
+
+---
+
+Notas V2
+
+Criando package.json <3
+npm init
+
+
+criar index.js
+
+
+npm install express
+
+
+npm i body-parser
+Copiar código da doc
+
+npm i nodemon
+Add script de start e packege.json
+
+Criar .gitignore
