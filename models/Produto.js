@@ -7,6 +7,8 @@ class Produto extends Model {
             nome: DataTypes.STRING,
             descricao: DataTypes.STRING, 
             preco: DataTypes.FLOAT,
+            fornecedor: DataTypes.STRING,
+            imagem: DataTypes.STRING,
         }, {
             sequelize: connection
         })

@@ -36,7 +36,9 @@ app.post('/produtos', async (request, response) => {
     const produto =  await Produto.create({
         nome: request.body.nome,
         descricao: request.body.descricao, 
-        preco: request.body.preco
+        preco: request.body.preco,
+        fornecedor: request.body.fornecedor,
+        imagem: request.body.imagem,
     });
 
     response.json(produto);
