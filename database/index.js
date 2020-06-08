@@ -12,7 +12,7 @@ const PedidoProduto = require('../models/PedidoProduto');
 //  }
 // });
  
-const connection = newSequelize(dbConfigs);
+const connection = new Sequelize(dbConfigs);
  
 Produto.init(connection);
 Cliente.init(connection);

@@ -9,6 +9,7 @@ app.use(cors());
 require('./database/index');
 
 const Produto = require('./models/Produto');
+const Cliente = require('./models/Cliente');
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -43,7 +44,7 @@ app.post('/produtos', async (request, response) =>{
         imagem: request.body.imagem
     });
     response.json(produto);
-})
+});
 
 app.delete('/produtos/:id', async (request, response) =>{
 
@@ -58,6 +59,16 @@ app.delete('/produtos/:id', async (request, response) =>{
     const deletado = await produto.destroy();
 
     response.json(deletado);
+});
+
+app.post('/clientes', async (request, response) =>{
+    const cliente = await Cliente.create({
+        nome: request.body.nome,
+        email:request.body.email,
+        endereco:request.body.endereco,
+        telefone: request.body.telefone
+    });
+    response.json(cliente);
 });
 
 app.listen(PORT, () => console.log(`Rodando na porta ${PORT}`))
