@@ -5,6 +5,7 @@ class Cliente extends Model {
     static init (connection){
         super.init({
             nome: DataTypes.STRING,
+            senha: DataTypes.STRING,
             email: DataTypes.STRING,
             endereco: DataTypes.STRING,
             telefone: DataTypes.STRING,
