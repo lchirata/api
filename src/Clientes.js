@@ -1,5 +1,6 @@
 const Cliente = require('../models/Cliente');
-const { request } = require('express');
+const Pedido = require('../models/Pedido');
+const { request, response } = require('express');
 const router = require('express').Router();
 
 router.get('/:id', async (request, response) => {
@@ -35,6 +36,23 @@ router.post('/login', async (request, response) =>{
     } else {
         response.status(404).json({mensagem: 'Cliente nao encontrado' });
     }
+});
+
+router.get('/', async (request, response) => {
+    const clientes = await Cliente.findAll();
+    response.json(clientes);
+});
+
+router.get('/:id/pedidos', async(request, response) =>{
+    const idCliente = request.params.id;
+
+    const pedidos = await Pedido.findAll({
+        where : {
+            cliente_id: idCliente,
+        }
+    });
+
+    response.json(pedidos)
 });
 
 module.exports = router;

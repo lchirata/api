@@ -1,10 +1,11 @@
 const Produto = require('../models/Produto');
-const Pedido = require('./models/Pedido');
-const PedidoProduto = require('./models/PedidoProduto');
+const Pedido = require('../models/Pedido');
+const PedidoProduto = require('../models/PedidoProduto');
 
 const router = require('express').Router();
+const moment = require('moment');
 
-app.post('/', async (request, response)=>{
+router.post('/', async (request, response)=>{
     let total =0;
     const data = moment().format('DD/MM/YYYY');
 
@@ -46,6 +47,11 @@ app.post('/', async (request, response)=>{
     }
 
     response.json(pedido);
+})
+
+router.get('/', async (request, response)=>{
+    const pedidos = await Pedido.findAll();
+    response.json(pedidos);
 })
 
 module.exports = router;
