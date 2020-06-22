@@ -1,5 +1,7 @@
 const Cliente = require('../models/Cliente');
 const Pedido = require('../models/Pedido');
+const Produto = require('../models/Produto');
+const PedidoProduto = require('../models/PedidoProduto');
 const { request, response } = require('express');
 const router = require('express').Router();
 
@@ -43,16 +45,44 @@ router.get('/', async (request, response) => {
     response.json(clientes);
 });
 
-router.get('/:id/pedidos', async(request, response) =>{
+
+router.get('/:id/pedidos', async (request, response) =>{
     const idCliente = request.params.id;
+
+    const pedidosComProdutos = [];
 
     const pedidos = await Pedido.findAll({
         where : {
             cliente_id: idCliente,
         }
     });
+    for (const pedido of pedidos) {
 
-    response.json(pedidos)
+        const dadosDoPedidos = pedido.toJSON();
+        dadosDoPedidos.produtos = [];
+
+        const pedidosProdutos = await PedidoProduto.findAll({
+            where : {
+                id_pedido: pedido.id,
+            }
+        })
+
+        for (const pedidoProduto of pedidosProdutos) {
+            const produto = await Produto.findOne({
+                where: {
+                    id: pedidoProduto.id_produto,
+                }
+            })
+
+            dadosDoPedidos.produtos.push({
+                nome: produto.nome,
+                quantidade: pedidoProduto.quantidade,
+            })
+        }
+
+        pedidosComProdutos.push(dadosDoPedidos);
+    }
+    response.json(pedidosComProdutos);
 });
 
 module.exports = router;
