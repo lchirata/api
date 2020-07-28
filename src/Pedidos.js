@@ -8,20 +8,21 @@ const moment = require('moment');
 router.post('/', async (request, response)=>{
     let total =0;
     const data = moment().format('DD/MM/YYYY');
-
+    console.log("testeeeeeeeeeeee");
     const body = request.body;
     const id_cliente = body.id_cliente;
     const produtos = body.produtos; //ARRAY DE PRODUTOS DA REQUEST 
     const prods = [];
 
     //TOTAL DO PEDIDO
-    for(const produto of produtos){
+    for(const produto of produtos){    
         console.log(produto);
         const prod = await Produto.findOne({
             where: {
-                id: produto.id_produto,
+                id: produto.id,
             }
         });
+
 
         prod.quantidade = produto.quantidade;
         prods.push(prod);
@@ -29,7 +30,6 @@ router.post('/', async (request, response)=>{
     }
 
     //CRIA PEDIDO
-
     const pedido = await Pedido.create({
         cliente_id: id_cliente,
         total: total, 
